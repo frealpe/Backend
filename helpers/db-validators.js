@@ -1,7 +1,10 @@
+const { Categoria,Producto } = require('../models');
 const Role = require('../models/role');
 const Usuario = require('../models/usuario');
 
-const esRoleVaido = async (rol = '') => {
+
+//Si no llega el rol entonces por defecto 'USER_ROLE'
+const esRoleVaido = async (rol = 'ADMIN_ROLE') => {
     //Verifcar si existe el rol    
     const existeRol = await Role.findOne({ rol });
     if (!existeRol) {
@@ -21,7 +24,7 @@ const emailExiste = async (correo = '') => {
 }
 
 /////////////////////////////////////////////////////////////////
-const existeUsuarioPorId = async (id = '') => {
+const existeUsuarioPorId = async (id) => {
     //Verifcar si existe el correo
     const existeUsuario = await Usuario.findById(id);
     if (!existeUsuario) {
@@ -30,11 +33,51 @@ const existeUsuarioPorId = async (id = '') => {
     }
 
 }
+/////////////////////////////////////////////////////////////////
+const existeCategoriaPorId = async (id) => {
+    const existeCategoria = await Categoria.findById(id);
+    if (!existeCategoria) {
+        throw new Error(`El id no existe: ${id}`);
+    }
 
+}
 
 /////////////////////////////////////////////////////////////////
+const existeProductoPorId = async (id) => {
+    //Verifcar si existe el correo
+    const existeProducto = await Producto.findById(id);
+    if (!existeProducto) {
+        throw new Error(`El id no existe: ${id}`);
+
+    }   
+
+}
+
+///////////////////////////////////////////////////////////////////
+
+const valida = async (id='') => {
+    //Verifcar si existe el correo
+        console.log("Salida");
+}
+///////////////////////////////////////////////////////////////////
+//Validar colecciones   
+const coleccionesPermitidas=(coleccion='',colecciones=[])=>{
+    const incluida = colecciones.includes(coleccion);
+    if(!incluida)
+    {
+        throw new Error(`La coleccion ${coleccion} no es permitida, ${colecciones}`);
+    }
+    return true;
+
+}
+///////////////////////////////////////////////////////////////////
+
 module.exports = {
     esRoleVaido,
     emailExiste,
-    existeUsuarioPorId
+    existeUsuarioPorId,
+    existeCategoriaPorId,
+    existeProductoPorId,
+    coleccionesPermitidas,
+    valida,
 }
