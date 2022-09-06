@@ -1,73 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Google Signin</title>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
 
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
 
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="admin_dashboard">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>admin_dashboard</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = '2286553501';
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
 </head>
-
 <body>
-
-   <h1>Google Signin</h1>
-   <hr>
-
-   <div id="g_id_onload" data-client_id="760951173667-ns665t7pi0n9st0qcj7r4am5af8b3mj6.apps.googleusercontent.com"
-      data-callback="handleCredentialResponse" data-auto_prompt="false" data-auto_select="true">
-   </div>
-
-   <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
-      data-shape="rectangular" data-logo_alignment="left">
-   </div>
-
-
-   <button id="g_id_signout">Sign Out</button>
-
-
-   <hr>
-   <h1>One Tap</h1>
-
-
-
-   <script>
-      function handleCredentialResponse(response) {
-
-         const body = { id_token: response.credential }
-         fetch('http://localhost:8080/api/auth/google', {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-         })
-            .then(r => r.json())
-            .then(resp => {
-               console.log(resp)
-               localStorage.setItem('email', resp.usuario.correo)
-            })
-            .catch(console.warn)
-      }
-
-
-      const button = document.getElementById('g_id_signout');
-      button.onclick = async () => {
-
-         console.log(google.accounts.id)
-         google.accounts.id.disableAutoSelect()
-         google.accounts.id.revoke(localStorage.getItem('email'), done => {
-            console.log('consent revoked');
-            localStorage.clear()
-            location.reload()
-         });
-      }
-
-
-   </script>
-
-
-   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function(engineInitializer) {
+        return engineInitializer.initializeEngine();
+      }).then(function(appRunner) {
+        return appRunner.runApp();
+      });
+    });
+  </script>
 </body>
-
 </html>
