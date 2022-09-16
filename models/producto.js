@@ -9,11 +9,10 @@ const ProductoSchema = Schema({
         unique: true
     },
 ///////////////////////////////////////    
-/*     estado: {
-        type: Boolean,
-        default: true,
-        require: true
-    }, */
+     color: {
+        type: String, 
+//        require: true                                  
+    }, 
 ///////////////////////////////////////    
      genero:{
         type:String,
