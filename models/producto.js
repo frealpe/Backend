@@ -11,6 +11,8 @@ const ProductoSchema = Schema({
 ///////////////////////////////////////    
      color: {
         type: String, 
+        default: 'Blanco',
+        require:[true,'La cantidad es obligatoria']         
 //        require: true                                  
     }, 
 ///////////////////////////////////////    

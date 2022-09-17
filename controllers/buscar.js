@@ -42,16 +42,17 @@ const buscarCategorias=async(termino='',res=response)=>{
 /////////////////////////////////////////////////////////////////////////////////
 const buscarProductos=async(termino='',res=response)=>{
     const esMongoID = ObjectId.isValid(termino);
-
+    
     if(esMongoID){
         const producto = await Producto.findById(termino)
-                                        .populate('categoria','nombre');
+        .populate('categoria','nombre','color','genero');
         return res.json ({results: ( producto ) ? [ producto ] : []});
     }
+    console.log(res.json);
     const regex = new RegExp(termino,'i');  //Insensible a las mayusculas y minusculas
 
     const productos = await Producto.find({nombre:regex , estado:true })
-                                    .populate('categoria','nombre');
+                                    .populate('categoria','nombre','color','genero');
     return res.json ({results: productos });
 }
 /////////////////////////////////////////////////////////////////////////////////
