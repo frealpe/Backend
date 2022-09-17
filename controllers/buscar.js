@@ -53,8 +53,11 @@ const buscarProductos=async(termino='',res=response)=>{
     const productos = await Producto.find({
         $or: [{nombre:regex},{genero:regex},{color:regex},{precio:regex}],
         $and: [{estado:true}]  
-    });//.populate('categoria','nombre');
-    return res.json ({productos });
+    });
+
+//    const categorias = buscarCategorias(termino,res);
+
+    return res.json ({productos,categorias});
 }
 /////////////////////////////////////////////////////////////////////////////////
 const buscarProduCateg=async(termino='',res=response)=>{
@@ -102,8 +105,8 @@ const buscar = (req,res=response)=>{
             
     }
 
-
 }
+//////////////////////////////////////////////////////////////////////////////
 
 module.exports={
     buscar,
