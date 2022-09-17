@@ -37,28 +37,29 @@ const buscarCategorias=async(termino='',res=response)=>{
     const regex = new RegExp(termino,'i');  //Insensible a las mayusculas y minusculas
 
     const categorias = await Categoria.find({nombre:regex,estado:true});
-    return res.json ({results: categorias });
+    return res.json ({categorias});
 }
 /////////////////////////////////////////////////////////////////////////////////
 const buscarProductos=async(termino='',res=response)=>{
     const esMongoID = ObjectId.isValid(termino);
     
     if(esMongoID){
-        const producto = await Producto.findById(termino)
-        .populate('categoria','nombre','color','genero');
+        const producto = await Producto.findById(termino);
+
         return res.json ({results: ( producto ) ? [ producto ] : []});
     }
-    console.log(res.json);
     const regex = new RegExp(termino,'i');  //Insensible a las mayusculas y minusculas
-
-    const productos = await Producto.find({nombre:regex , estado:true })
-                                    .populate('categoria','nombre','color','genero');
-    return res.json ({results: productos });
+    
+    const productos = await Producto.find({
+        $or: [{nombre:regex},{genero:regex},{color:regex},{precio:regex}],
+        $and: [{estado:true}]  
+    });//.populate('categoria','nombre');
+    return res.json ({productos });
 }
 /////////////////////////////////////////////////////////////////////////////////
 const buscarProduCateg=async(termino='',res=response)=>{
     const esMongoID = ObjectId.isValid(termino);
-    console.log(termino);  
+
     if(esMongoID){
         const [total,productos] = await Promise.all([
             Producto.countDocuments({categoria:termino}),
@@ -69,11 +70,6 @@ const buscarProduCateg=async(termino='',res=response)=>{
     }else{
         return null;
     }
-/*     const regex = new RegExp(termino,'i');  //Insensible a las mayusculas y minusculas
-
-    const productos = await Producto.find({nombre:regex , estado:true })
-                                        .populate('categoria','nombre');  */
-    ///return res.json (producto );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,8 +94,6 @@ const buscar = (req,res=response)=>{
             buscarProduCateg(termino,res)    
     
             break;
-
-
 
         default:
             res.status(500).json({

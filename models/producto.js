@@ -12,7 +12,7 @@ const ProductoSchema = Schema({
      color: {
         type: String, 
         default: 'Blanco',
-        require:[true,'La cantidad es obligatoria']         
+//        require:[true,'El color es obligatorio']         
 //        require: true                                  
     }, 
 ///////////////////////////////////////    
@@ -54,7 +54,8 @@ const ProductoSchema = Schema({
 });
 
 ProductoSchema.methods.toJSON = function () {
-    const { __v, estado, ...data } = this.toObject();
+    const { __v,estado,...data } = this.toObject();
+    //const { __v, estado, ...data } = this.toObject();
     return data;
 }
 
