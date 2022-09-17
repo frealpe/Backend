@@ -57,7 +57,7 @@ const buscarProductos=async(termino='',res=response)=>{
 
 //    const categorias = buscarCategorias(termino,res);
 
-    return res.json ({productos,categorias});
+    return res.json ({productos});
 }
 /////////////////////////////////////////////////////////////////////////////////
 const buscarProduCateg=async(termino='',res=response)=>{
