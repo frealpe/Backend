@@ -53,7 +53,7 @@ const buscarProductos=async(termino='',res=response)=>{
     const productos = await Producto.find({
         $or: [{nombre:regex},{genero:regex},{color:regex},{precio:regex}],
         $and: [{estado:true}],       
-    }).populate('categoria');
+    });
 
     const total = (productos.length).toString();
 
