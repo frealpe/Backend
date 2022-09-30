@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+
 const { dbConnection } = require('../database/config');
 const fileUpload = require('express-fileupload');
 
@@ -24,6 +25,7 @@ class Server {
         this.middlewares();
         //Rutas de aplicación
         this.routes();
+
     }
     /////////////////////////////////////////////////
     async conectarDB() {

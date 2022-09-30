@@ -1,7 +1,7 @@
 
 
 const {Schema,model} = require('mongoose')
-
+const Schema = mongoose.Schema;
 
 const RoleSchema = Schema({
 
@@ -12,4 +12,4 @@ const RoleSchema = Schema({
 
 });
 
-module.exports=model('Role',RoleSchema);
+module.exports= mongoose.model('Role',RoleSchema);
